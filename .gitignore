@@ -1,0 +1,14 @@
+
+.DS_Store
+build
+.git
+.vscode
+*.egg-info
+dist
+output
+data/coco
+data/custom/*
+backup
+weights/*
+__pycache__
+checkpoints
