@@ -7,8 +7,10 @@ build
 dist
 output
 data/coco
-data/custom/*
+data/custom/images/*
+data/custom/labels/*
 backup
-weights/*
+weights/*.weights
+weights/*.74
 __pycache__
 checkpoints

@@ -44,7 +44,7 @@ Move your annotations to `data/custom/labels/   (与imgaes文件夹匹配，且l
 
 #### Define Train and Validation Sets
 
-生成包含训练与验证集所有图片路径的 trian.txt与valid.txt文件 使用data/deal/imagename2txt.py 文件
+生成包含训练与验证集所有图片路径的 trian.txt与valid.txt文件 使用 data/deal/imagename2txt.py 文件
 In `data/custom/train.txt` and `data/custom/valid.txt`, add paths to images that will be used as train and validation data respectively.
 
 #### Train
