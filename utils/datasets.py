@@ -53,7 +53,34 @@ class ImageFolder(Dataset):
         return img_path, img
 
     def __len__(self):
+        print (len(self.files))
         return len(self.files)
+
+
+# add by xiaosa
+
+class ImagePath(Dataset):
+    def __init__(self, image_path, img_size=416):
+        file = []
+        file.append(image_path)
+        #self.file = image_path     #self.file需要为一个list  若直接给，会导致数据量为image_path 长度
+        self.file = file
+        self.img_size = img_size
+
+    def __getitem__(self, index):
+        img_path = self.file[index]
+        # Extract image as PyTorch tensor
+        img = transforms.ToTensor()(Image.open(img_path))
+        # Pad to square resolution
+        img, _ = pad_to_square(img, 0)
+        # Resize
+        img = resize(img, self.img_size)
+
+        return img_path, img
+
+    def __len__(self):
+        print (len(self.file))
+        return len(self.file)
 
 
 class ListDataset(Dataset):

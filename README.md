@@ -51,12 +51,27 @@ In `data/custom/train.txt` and `data/custom/valid.txt`, add paths to images that
 To train on the custom dataset run:
 
 ```
-$ python3 ./yolov3/train.py --model_def config/yolov3-custom.cfg --data_config config/custom.data
+$ python3 train.py --model_def config/yolov3-custom.cfg --data_config config/custom.data
 ```
 
 Add `--pretrained_weights weights/darknet53.conv.74` to train using a backend pretrained on ImageNet.
 
 
+#### Demo
+
+To test on one image :(ESC退出)  (需要安装opencv)
+
+```
+$ pip install opencv-python
+
+$ python3 demo.py --image_path=./data/samples/dog.jpg
+```
+
+To test on folder & save the images :
+
+```
+$ python3 detect.py --image_folder data/samples/
+```
 
 [[Paper]](https://pjreddie.com/media/files/papers/YOLOv3.pdf) [[Project Webpage]](https://pjreddie.com/darknet/yolo/) [[Authors' Implementation]](https://github.com/pjreddie/darknet)
 
