@@ -1,3 +1,4 @@
+#coding=utf-8
 from __future__ import division
 
 from models import *
@@ -21,7 +22,7 @@ from torch.autograd import Variable
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from matplotlib.ticker import NullLocator
-
+from torch.utils.tensorboard import SummaryWriter
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--image_path", type=str, default="data/samples/dog.jpg", help="path to image")
@@ -40,6 +41,8 @@ if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     os.makedirs("output", exist_ok=True)
+
+    log_writer = SummaryWriter(log_dir='logs',comment='yolov3')
 
     # Set up model
     model = Darknet(opt.model_def, img_size=opt.img_size).to(device)
@@ -73,10 +76,16 @@ if __name__ == "__main__":
         # Configure input
         input_img = Variable(input_img.type(Tensor))
 
+        
+        # with torch.no_grad():
+        #     log_writer.add_graph(model, input_img)
+
         # Get detections
         with torch.no_grad():
             detections = model(input_img)
+            log_writer.add_graph(model, input_img)         #模型日志
             detections = non_max_suppression(detections, opt.conf_thres, opt.nms_thres)
+            #log_writer.add_graph(model, input_img)         #模型日志
 
         # Log progress
         current_time = time.time()
@@ -93,6 +102,7 @@ if __name__ == "__main__":
     
     im = cv.imread(image_path1)
     if img_detection1 is not None:
+        print (detections)
         # Rescale boxes to original image
         img_detection1 = rescale_boxes(img_detection1, opt.img_size, im.shape[:2])
         unique_labels = img_detection1[:, -1].cpu().unique()
